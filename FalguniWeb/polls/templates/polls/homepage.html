@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>List of Users</title>
+    <style>
+      table, th, td {
+        width:100%;
+        border: 1px solid black;
+        padding: 15px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    email: {{ user }}
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Nomination</th>
+      </tr>
+      {% for candidate in lst %}
+        <tr>
+            <td>{{ candidate }}</td>
+            <td>
+                <form action="{% url 'polls:nominate' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" value="{{ candidate }}" name="nomination" hidden=true/>
+                        <button type="submit">Nominate</button>
+                </form>
+            </td>
+            
+        <tr>
+        {% endfor %}
+        
+    </table>
+  </body>
+</html>
+
+<script> 
+    function sendVal(val){
+        console.log(val);
+        return true;
+    }
+</script>

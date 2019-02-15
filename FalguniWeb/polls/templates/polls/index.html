@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Online Voting</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/assets/stylesheets/main.css' %}">
+    <script src="{% static 'polls/homepage.js' %}"></script>
+  </head>
+
+  <body>
+  <header class="primary-header container group">
+      <h1 class="logo">
+        <a href="index.html">Online<br>Voting</a>
+      </h1>
+    <h3 class="tagline">Welcome</h3>
+  <nav class="nav primary-nav">
+    <ul>
+      <li><a href="index.html">Home</a></li><!--
+     --><li><a href="resource.html">List of Users</a></li><!--
+     --><li><a href="news.html">Admin Panel</a></li>
+
+    </ul>
+  </nav>
+  </header>
+    
+    <div class="form-modal">
+
+    <div class="form-toggle">
+        <button id="login-toggle" onclick="toggleLogin()">log in</button>
+        <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+    </div>
+
+    <div id="login-form">
+        <form action="{% url 'polls:login' %}" method="post">{% csrf_token %}
+            <input type="email" placeholder="Enter email" name="email"/>
+            <input type="password" placeholder="Enter password" name="password"/>
+            <button type="submit" class="btn login">login</button>
+        </form>
+        
+    </div>
+
+    <div id="signup-form">
+        <form action="{% url 'polls:signup' %}" method="post">{% csrf_token %}
+            <input type="email" placeholder="Enter your email" name="email"/>
+            <input type="text" placeholder="Choose username" name="username"/>
+            <input type="password" placeholder="Create password" name="password"/>
+            <button type="submit" class="btn signup">create account</button>
+        </form>
+        
+    </div>
+    {{ error }}
+
+</div>
+
+  </body>
+</html>
