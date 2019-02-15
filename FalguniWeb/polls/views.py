@@ -47,7 +47,7 @@ def signup(request):
 
     new_user = User(full_name=username, email=email, password=password)
     new_user.save()
-    return redirect('/polls/index')
+    return redirect('/polls/index.html')
 
 
 @csrf_exempt
@@ -57,7 +57,8 @@ def homepage(request):
     qset = User.objects.all()
     lst = []
     for q in qset:
-        lst.append(q.email)
+        if q.email != request.session['user']:    
+            lst.append(q.email)
     
     template = loader.get_template('polls/homepage.html')
 
@@ -72,7 +73,7 @@ def nominate(request):
     qset = User.objects.all()
 
     for q in qset:
-        if q.email==request.POST.get('nomination'):
+        if q.email==request.POST.get('nomination') and q.email != request.session['user']:
             q.is_nominated = True
             q.save()
             break
@@ -84,13 +85,36 @@ def nominate(request):
 def votepage(request):
     if 'user' not in request.session or request.session['user'] == -1:
         return render(request, 'polls/index.html', {})
+    
+    qset = User.objects.filter(email=request.session['user'])
+    q = qset[0]
+    if q.vote_casted == True:
+        request.session['user'] == -1
+        return render(request, 'polls/index.html', {'error': "error : user already voted"})
+        
+
     qset = User.objects.filter(is_nominated=True)
     lst = []
     for q in qset:
-        lst.append(q.email)
+        if q.is_nominated == True:
+            lst.append(q.email)
     
     template = loader.get_template('polls/votepage.html')
 
     return HttpResponse(template.render(context={'user': request.session['user'], 'lst': lst}))
 
 
+@csrf_exempt
+def vote(request):
+    if 'user' not in request.session or request.session['user'] == -1:
+        return render(request, 'polls/index.html', {})
+    
+    qset = User.objects.all()
+
+    for q in qset:
+        if q.email==request.POST.get('voteid'):
+            q.is_nominated = True
+            q.save()
+            break
+    
+    return redirect('/polls/votepage')
