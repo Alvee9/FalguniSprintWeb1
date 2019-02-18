@@ -18,10 +18,12 @@
   </head>
   <body>
     email: {{ user }}
+    
+    <a href="{% url 'polls:logout' %}">logout</a>
     <table>
       <tr>
         <th>Name</th>
-        <th>Nomination</th>
+        
       </tr>
       {% for candidate in lst %}
         <tr>
@@ -29,9 +31,23 @@
             <td>
                 <form action="{% url 'polls:nominate' %}" method="post">
                         {% csrf_token %}
-                        <input type="text" value="{{ candidate }}" name="nomination" hidden=true/>
-                        <button type="submit">Nominate</button>
+                        <input type="text" value="{{ candidate }}" name="nomination_PM" hidden=true/>
+                        <button type="submit">Nominate for PM</button>
                 </form>
+            </td>
+            <td>
+                    <form action="{% url 'polls:nominate' %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" value="{{ candidate }}" name="nomination_mayor" hidden=true/>
+                            <button type="submit">Nominate for mayor</button>
+                    </form>
+            </td>
+            <td>
+                    <form action="{% url 'polls:nominate' %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" value="{{ candidate }}" name="nomination_councillor" hidden=true/>
+                            <button type="submit">Nominate for councillor</button>
+                    </form>
             </td>
             
         <tr>

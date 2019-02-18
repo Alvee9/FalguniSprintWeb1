@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Election Stat</title>
+    <style>
+      table, th, td {
+        width:100%;
+        border: 1px solid black;
+        padding: 15px;
+        text-align: left;
+      }
+      h1, h2{
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Election Stats</h1>
+    <h2>National Parliament Election</h2>
+    <h3>Position: PM</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Stat %}
+    {% if i.CatName == "PM" %}
+    <tr>
+      <td>{{ i.UserName }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    
+    </table>
+    <h2>City Corporation Election</h2>
+    <h3>Position: Mayor</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Stat %}
+    {% if i.CatName == "Mayor" %}
+    <tr>
+      <td>{{ i.UserName }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    
+    </table>
+    <h3>Position: Councillor</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Stat %}
+    {% if i.CatName == "Councillor" %}
+    <tr>
+      <td>{{ i.UserName }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>Stat
+
+
+  <h1>Election Result</h1>
+    <h2>National Parliament Election</h2>
+    <h3>Position: PM</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Result %}
+    {% if i.Cat == "PM" %}
+    <tr>
+      <td>{{ i.Win }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    
+    </table>
+    <h2>City Corporation Election</h2>
+    <h3>Position: Mayor</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Result %}
+    {% if i.Cat == "Mayor" %}
+    <tr>
+      <td>{{ i.Win }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+    
+    </table>
+    <h3>Position: Councillor</h3>
+    <table style="width:100%">
+    <tr>
+      <th>Candidate Name</th>
+      <th>Number of Votes</th>
+    </tr>
+    {% for i in result.Result %}
+    {% if i.Cat == "Councillor" %}
+    <tr>
+      <td>{{ i.Win }}</td>
+      <td>{{i.Count}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+
+
+  </body>
+</html>

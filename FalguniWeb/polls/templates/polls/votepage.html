@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 
-
-
-
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -17,27 +14,52 @@
     </style>
   </head>
   <body>
-    email: {{ user }}
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Nomination</th>
-      </tr>
-      {% for candidate in lst %}
-        <tr>
-            <td>{{ candidate }}</td>
-            <td>
-                <form action="{% url 'polls:vote' %}" method="post">
-                        {% csrf_token %}
-                        <input type="text" value="{{ candidate }}" name="voteid" hidden=true/>
-                        <button type="submit">Vote</button>
-                </form>
-            </td>
-            
-        <tr>
-        {% endfor %}
+    
+    <div>
+        <span>
+            Welcome {{ user }} !            
+        </span>
+        <span>
+            <a href="{% url 'polls:logout' %}">logout</a>
+        </span>
+    </div>
+    
+    <form id='myform' action="{% url 'polls:vote' %}" class=""  method="post">
         
-    </table>
+        <div>
+            Select Candidate for PM Election
+            <select required id="c1" label="PM Election" name="pm_vote">
+                <option value="">Select</option>
+                {% for candidate in lst_PM %}
+                <option value="{{ candidate }}">{{ candidate }}</option>
+                {% endfor %}
+            </select> 
+        </div>
+        
+        <div>
+            Select Candidate for Mayor Election
+            <select required id="c2" label="Mayor Election" name="m_vote">
+                <option value="">Select</option>
+                {% for candidate in lst_mayor %}
+                
+                <option value="{{ candidate }}">{{ candidate }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            Select Candidate for Councilor Election
+            <select required id="c3" label="Councilor Election" name="c_vote">
+                <option value="">Select</option>
+                {% for candidate in lst_councillor %}
+
+                <option value="{{ candidate }}">{{ candidate }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="input" name="button" id="myvote" onclick="request()">Cast vote</button>      
+    </form>
   </body>
 </html>
 
@@ -46,4 +68,57 @@
         console.log(val);
         return true;
     }
+</script>
+
+<script>                                                                                                                                    [0/1704]
+    function request(){    
+      console.log("request being called")
+      var c1 = document.forms["myform"]["c1"].value;
+      var c2 = document.forms["myform"]["c2"].value;
+      var c3 = document.forms["myform"]["c3"].value;
+      console.log(c1, c2, c3)
+      
+      const req = new XMLHttpRequest();                                                                              
+        const data = {                          
+             listVotes: [
+                 {             
+                    "catagory": "national",
+                    "candidate": c1,                                                                                
+                    "position": "PM",                                                                                        
+                },
+                {                            
+                    "catagory": "national",
+                    "candidate": c2,
+                    "position": "Mayor",
+                },
+                {
+                    "catagory": "national",
+                    "candidate": c3,
+                    "position": "Councillor",
+                }
+            
+            ]            
+        }                       
+      const req_headers = {
+          headers:{
+              "Access-Control-Allow-Origin" : "*"
+          },                  
+          body:JSON.stringify(data),
+          method:"POST"
+      };
+
+      const url = "http://localhost:8080"
+      fetch(url,req_headers);
+      const getData = async url => {
+      try {
+          const response = await fetch(url);
+          console.log(response);
+          const json = await response.json();
+          console.log(json);
+      } catch (error) {
+          console.log(error);
+      }
+    };
+
+}
 </script>

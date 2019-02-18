@@ -11,14 +11,12 @@
   <body>
   <header class="primary-header container group">
       <h1 class="logo">
-        <a href="index.html">Online<br>Voting</a>
+        Online voting system
       </h1>
     <h3 class="tagline">Welcome</h3>
   <nav class="nav primary-nav">
     <ul>
-      <li><a href="index.html">Home</a></li><!--
-     --><li><a href="resource.html">List of Users</a></li><!--
-     --><li><a href="news.html">Admin Panel</a></li>
+         <a href="{% url 'polls:result' %}">Result<br></a>
 
     </ul>
   </nav>
@@ -26,32 +24,56 @@
     
     <div class="form-modal">
 
-    <div class="form-toggle">
+    <!-- <div class="form-toggle">
         <button id="login-toggle" onclick="toggleLogin()">log in</button>
         <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+    </div> -->
+
+    <div style="color:red">{{ error }}</div>
+    <div style="color:green">{{ message }}</div>
+    <div>
+        Login
+        <div id="login-form">
+            <form action="{% url 'polls:login' %}" method="post">{% csrf_token %}
+                <div>
+                    <input type="email" placeholder="Enter email" name="email" required/>
+                </div>
+                <div>
+                    <input type="password" placeholder="Enter password" name="password" required/>
+                </div>
+                <div>
+                    <button type="submit" class="btn login">Login</button>
+                </div>
+            </form>
+        </div>           
     </div>
-
-    <div id="login-form">
-        <form action="{% url 'polls:login' %}" method="post">{% csrf_token %}
-            <input type="email" placeholder="Enter email" name="email"/>
-            <input type="password" placeholder="Enter password" name="password"/>
-            <button type="submit" class="btn login">login</button>
-        </form>
-        
+    
+</br>
+</br>
+    <div>
+            If not Singned up yet please Sign Up
+            <div id="signup-form">
+                <form action="{% url 'polls:signup' %}" method="post">{% csrf_token %}
+                    <div>
+                        Email <input type="email" placeholder="Enter your email(example@example.com)" name="email"/ required>
+                    </div>
+                    <div>
+                        Name <input type="text" placeholder="Full Name" name="username"/ required>
+                    </div>
+                    <div>
+                        Password<input type="password" placeholder="password" name="password"/ required>
+                    </div>
+                    <div>
+                        Password Confirmation<input type="password" placeholder="retype password" name="password"/ required>
+                    </div>
+                
+                    <button type="submit" class="btn signup">signup</button>
+                </form>
+                
+            </div>
+                    
+        </div>
     </div>
-
-    <div id="signup-form">
-        <form action="{% url 'polls:signup' %}" method="post">{% csrf_token %}
-            <input type="email" placeholder="Enter your email" name="email"/>
-            <input type="text" placeholder="Choose username" name="username"/>
-            <input type="password" placeholder="Create password" name="password"/>
-            <button type="submit" class="btn signup">create account</button>
-        </form>
-        
-    </div>
-    {{ error }}
-
-</div>
-
+    
   </body>
 </html>

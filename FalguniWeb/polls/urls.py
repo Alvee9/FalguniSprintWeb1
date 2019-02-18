@@ -10,6 +10,7 @@ urlpatterns = [
     path('homepage', views.homepage, name='homepage'),
     path('nominate', views.nominate, name='nominate'),
     path('votepage', views.votepage, name='votepage'),
-    path('vote', views.vote, name='vote')
-    
+    path('vote', views.vote, name='vote'),
+    path('result', views.result, name='result'),
+    path('logout', views.logout, name='logout'), 
 ]
